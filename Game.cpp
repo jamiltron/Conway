@@ -55,6 +55,26 @@ Game::~Game() {
   SDL_Quit();
 }
 
+int64_t Game::clampMax(int64_t value, unsigned int offset) {
+  if (INT64_MAX - offset <= value) {
+    return INT64_MAX;
+  } else if (INT64_MAX - offset - 1 <= value) {
+    return value + offset;
+  } else {
+    return value + offset + 1;
+  }
+}
+
+int64_t Game::clampMin(int64_t value, unsigned int offset) {
+  if (INT64_MIN + offset >= value) {
+    return INT64_MIN;
+  } else if (INT64_MIN + offset + 1 >= value) {
+    return value - offset;
+  } else {
+    return value - offset - 1;
+  }
+}
+
 void Game::handleZoom(int amount) {
   zoom = boost::algorithm::clamp(zoom + amount, ZOOM_MIN, ZOOM_MAX);
 }
@@ -146,9 +166,13 @@ void Game::render() {
   unsigned int w = cellWidth / 2;
   unsigned int h = cellHeight / 2;
 
-  // TODO: make sure we don't over/underflow here.
-  for (int64_t i = y - h - 1; i <= y + h + 1; i++) {
-    for (int64_t j = x - w - 1; j <= x + w + 1; j++) {
+  int64_t yMin = clampMin(y, h);
+  int64_t yMax = clampMax(y, h);
+  int64_t xMin = clampMin(x, w);
+  int64_t xMax = clampMax(x, w);
+
+  for (int64_t i = yMin; i <= yMax && i >= yMin; i++) {
+    for (int64_t j = xMin; j <= xMax && j >= xMin; j++) {
       if (tree.getCellAlive(j, i)) {
         rect.x = (j - x + w) * cellSize;
         rect.y = (i - y + h) * cellSize;

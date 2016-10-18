@@ -8,6 +8,9 @@ public:
   Game(unsigned int, unsigned int, QuadTree);
   ~Game();
 
+  static int64_t clampMin(int64_t, unsigned int);
+  static int64_t clampMax(int64_t, unsigned int);
+
   void handleInput();
   void render();
   void update();
