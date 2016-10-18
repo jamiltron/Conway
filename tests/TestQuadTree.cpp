@@ -301,4 +301,31 @@ TEST_CASE("QuadTree update", "[QuadTree]") {
     REQUIRE(true == tree.getCellAlive(big, 0));
     REQUIRE(true == tree.getCellAlive(big + 1, 0));
   }
+
+  SECTION("Creating a pulsar along the maximum wall dies off.") {
+    int64_t big = INT64_MAX;
+    auto i0 = std::pair<int64_t, int64_t>(big, -1);
+    auto i1 = std::pair<int64_t, int64_t>(big, 0);
+    auto i2 = std::pair<int64_t, int64_t>(big, 1);
+
+    auto points = std::vector<std::pair<int64_t, int64_t>>{i0, i1, i2};
+
+    QuadTree tree = QuadTree(points);
+
+    REQUIRE(true == tree.getCellAlive(big, -1));
+    REQUIRE(true == tree.getCellAlive(big, 0));
+    REQUIRE(true == tree.getCellAlive(big, 1));
+    REQUIRE(3 == tree.population());
+    REQUIRE(64 == tree.height());
+
+    tree.nextGeneration();
+
+    REQUIRE(true == tree.getCellAlive(big - 1, 0));
+    REQUIRE(true == tree.getCellAlive(big, 0));
+    REQUIRE(2 == tree.population());
+
+    tree.nextGeneration();
+    REQUIRE(0 == tree.population());
+    REQUIRE(1 == tree.height());
+  }
 }
