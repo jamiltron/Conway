@@ -55,23 +55,35 @@ Game::~Game() {
   SDL_Quit();
 }
 
-int64_t Game::clampMax(int64_t value, unsigned int offset) {
+int64_t Game::clampMax(int64_t value, unsigned int offset,
+                       unsigned int buffer = 1) {
   if (INT64_MAX - offset <= value) {
     return INT64_MAX;
-  } else if (INT64_MAX - offset - 1 <= value) {
+  } else if (INT64_MAX - offset - buffer <= value) {
     return value + offset;
   } else {
-    return value + offset + 1;
+    return value + offset + buffer;
   }
 }
 
-int64_t Game::clampMin(int64_t value, unsigned int offset) {
+int64_t Game::clampMin(int64_t value, unsigned int offset,
+                       unsigned int buffer = 1) {
   if (INT64_MIN + offset >= value) {
     return INT64_MIN;
-  } else if (INT64_MIN + offset + 1 >= value) {
+  } else if (INT64_MIN + offset + buffer >= value) {
     return value - offset;
   } else {
-    return value - offset - 1;
+    return value - offset - buffer;
+  }
+}
+
+int64_t Game::clampMove(int64_t axis, int amount) {
+  if (amount < 0) {
+    return clampMin(axis, -amount, 0);
+  } else if (amount > 0) {
+    return clampMax(axis, amount, 0);
+  } else {
+    return axis;
   }
 }
 
@@ -110,16 +122,16 @@ void Game::handleInput() {
         handleZoom(1);
         break;
       case SDLK_w:
-        y -= 1;
+        y = clampMove(y, -1);
         break;
       case SDLK_s:
-        y += 1;
+        y = clampMove(y, 1);
         break;
       case SDLK_a:
-        x -= 1;
+        x = clampMove(x, -1);
         break;
       case SDLK_d:
-        x += 1;
+        x = clampMove(x, 1);
         break;
       default:
         break;

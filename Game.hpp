@@ -8,8 +8,8 @@ public:
   Game(unsigned int, unsigned int, QuadTree);
   ~Game();
 
-  static int64_t clampMin(int64_t, unsigned int);
-  static int64_t clampMax(int64_t, unsigned int);
+  static int64_t clampMin(int64_t, unsigned int, unsigned int);
+  static int64_t clampMax(int64_t, unsigned int, unsigned int);
 
   void handleInput();
   void render();
@@ -20,6 +20,7 @@ public:
 private:
   static void throwSdlException(std::string);
 
+  int64_t clampMove(int64_t, int);
   void handleZoom(int);
   void handleSpeedAdjust(int);
 
