@@ -77,7 +77,7 @@ int64_t Game::clampMin(int64_t value, unsigned int offset,
   }
 }
 
-int64_t Game::clampMove(int64_t axis, int amount) {
+int64_t Game::clampMove(int64_t axis, int amount) const {
   if (amount < 0) {
     return clampMin(axis, -amount, 0);
   } else if (amount > 0) {

@@ -20,7 +20,7 @@ public:
 private:
   static void throwSdlException(std::string);
 
-  int64_t clampMove(int64_t, int);
+  int64_t clampMove(int64_t, int) const;
   void handleZoom(int);
   void handleSpeedAdjust(int);
 
