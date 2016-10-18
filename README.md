@@ -27,7 +27,7 @@ In the program WASD moves the camera, left bracket zooms out, right bracket zoom
 
 A lot of the following resources were used in searching to solve specific problems. The first three books were purchased and read throughout the week before tackling the problem. I didn't have the opportunity to finish any of these books, but I did use them to look up how to do things and how things worked.
 
-The two blogs and Gosper paper were referenced once I decided to use a QuadTree to solve the issue of an arbitrary board. As I ran into performance and implementation issues my search lead me to Hashlife, and my implementation uses an implementation of this algorithm.
+The two blogs and the Gosper paper were referenced once I decided to use a QuadTree to solve the issue of an arbitrary board. As I ran into performance and implementation issues my search lead me to Hashlife, and my implementation uses an implementation of this algorithm.
 
 Stack Overflow, Herb Sutter's blog, and Dr. Dobbs were also referenced heavily as I was learning how to do specific things in C++. Here's a short list of the resources I remembered to link:
 
