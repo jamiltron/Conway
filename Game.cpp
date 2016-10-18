@@ -7,6 +7,7 @@ static const int SPEED_MIN = 0;
 static const int SPEED_MAX = 10;
 static const int ZOOM_MIN = 0;
 static const int ZOOM_MAX = 8;
+static const int SPEED_CONSTANT = 100;
 
 /**
  * Given a string, throw that string and the result of SDL_GetError()
@@ -150,13 +151,13 @@ void Game::update() {
                        (double)SDL_GetPerformanceFrequency());
 
   timeSinceUpdate += dt;
-  if (timeSinceUpdate > speed * 100) {
+  if (timeSinceUpdate > speed * SPEED_CONSTANT) {
     auto ticks = SDL_GetTicks();
     tree.nextGeneration();
     std::cout << "Generation " << ++generationCount << " at height "
               << tree.height() << " took " << SDL_GetTicks() - ticks << "ms"
               << std::endl;
-    timeSinceUpdate -= speed * 100;
+    timeSinceUpdate -= speed * SPEED_CONSTANT;
   }
 }
 
