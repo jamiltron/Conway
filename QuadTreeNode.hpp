@@ -41,6 +41,7 @@ private:
   static QuadTreeNode *const intern(QuadTreeNode);
 
   bool areBordersEmpty() const;
+  int64_t getSeekOffset() const;
 
   QuadTreeNode *next;
 

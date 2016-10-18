@@ -134,9 +134,8 @@ bool QuadTreeNode::getCellAlive(int64_t x, int64_t y) const {
   }
 
   // figure out how far off from center we are, so we can traverse into the
-  // correct node in terms of fourths (hence the -2)
-  int64_t shiftBy = (height - 2 <= 0 ? 0 : height - 2);
-  int64_t offset = int64_t(1) << shiftBy;
+  // correct node
+  int64_t offset = getSeekOffset();
 
   if (x < 0) {
     if (y < 0) {
@@ -167,6 +166,19 @@ bool QuadTreeNode::getCellAlive(int64_t x, int64_t y) const {
       }
     }
   }
+}
+
+/**
+ * Returns the offset needed to calculate cell get/sets.
+ */
+int64_t QuadTreeNode::getSeekOffset() const {
+  // since we can only input within signed 64-bit, we limit the offset height to
+  // the max height
+  unsigned int thisHeight = height <= MAX_HEIGHT ? height : MAX_HEIGHT;
+  // calculate how far off from the center we are (in terms of fourths, which is
+  // why we shift by -2)
+  int64_t shiftBy = thisHeight - 2 <= 0 ? 0 : thisHeight - 2;
+  return int64_t(1) << shiftBy;
 }
 
 /**
@@ -337,13 +349,9 @@ QuadTreeNode *const QuadTreeNode::setCellAlive(int64_t x, int64_t y) const {
     return retrieve(true);
   }
 
-  // since we can only input within signed 64-bit, we limit the offset height to
-  // the max height
-  unsigned int thisHeight = height <= MAX_HEIGHT ? height : MAX_HEIGHT;
-  // calculate how far off from the center we are (in terms of fourths, which is
-  // why we shift by -2)
-  int64_t shiftBy = thisHeight - 2 <= 0 ? 0 : thisHeight - 2;
-  int64_t offset = int64_t(1) << shiftBy;
+  // calculate how far off from the center we are so we can traverse to the
+  // correct node
+  int64_t offset = getSeekOffset();
 
   if (x < 0) {
     if (y < 0) {
