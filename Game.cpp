@@ -19,7 +19,7 @@ void Game::throwSdlException(std::string message) {
 
 Game::Game(unsigned int width, unsigned int height, QuadTree tree)
     : shouldQuit(false), width(width), height(height), tree(tree),
-      generationCount(0), speed(5), zoom(4), x(-1), y(0) {
+      generationCount(0), speed(5), zoom(4), x(-1), y(-1) {
   if (SDL_Init(SDL_INIT_VIDEO) < 0) {
     throwSdlException("Could not initialize SDL: ");
   }
@@ -143,9 +143,10 @@ void Game::render() {
   unsigned int cellWidth = width / cellSize;
   unsigned int cellHeight = height / cellSize;
 
-  int w = cellWidth / 2;
-  int h = cellHeight / 2;
+  unsigned int w = cellWidth / 2;
+  unsigned int h = cellHeight / 2;
 
+  // TODO: make sure we don't over/underflow here.
   for (int64_t i = y - h - 1; i <= y + h + 1; i++) {
     for (int64_t j = x - w - 1; j <= x + w + 1; j++) {
       if (tree.getCellAlive(j, i)) {
