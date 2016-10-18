@@ -3,7 +3,6 @@
 #include <cstdint>
 #include <utility>
 #include <vector>
-using namespace std;
 
 TEST_CASE("QuadTree initialization", "[QuadTree]") {
   SECTION("Single-cell quad trees should report dead at (0,0)") {
@@ -13,7 +12,7 @@ TEST_CASE("QuadTree initialization", "[QuadTree]") {
   }
 
   SECTION("Creating a tree from empty points returns an empty quad") {
-    auto points = vector<pair<int64_t, int64_t>>();
+    auto points = std::vector<std::pair<int64_t, int64_t>>();
     QuadTree tree = QuadTree(points);
 
     REQUIRE(1 == tree.height());
@@ -26,8 +25,8 @@ TEST_CASE("QuadTree initialization", "[QuadTree]") {
   }
 
   SECTION("Create a tree in the default middle should work as expected") {
-    auto points = vector<pair<int64_t, int64_t>>{
-        pair<int64_t, int64_t>(0, 0), pair<int64_t, int64_t>(-1, -1)};
+    auto points = std::vector<std::pair<int64_t, int64_t>>{
+        std::pair<int64_t, int64_t>(0, 0), std::pair<int64_t, int64_t>(-1, -1)};
     QuadTree tree = QuadTree(points);
 
     REQUIRE(1 == tree.height());
@@ -130,21 +129,21 @@ TEST_CASE("QuadTree cellSetting", "[QuadTree]") {
   }
 
   SECTION("Setting on a massive pattern should work as expected") {
-    auto i0 = pair<int64_t, int64_t>(2, 1);
-    auto i1 = pair<int64_t, int64_t>(1, 3);
-    auto i2 = pair<int64_t, int64_t>(2, 3);
-    auto i3 = pair<int64_t, int64_t>(4, 2);
+    auto i0 = std::pair<int64_t, int64_t>(2, 1);
+    auto i1 = std::pair<int64_t, int64_t>(1, 3);
+    auto i2 = std::pair<int64_t, int64_t>(2, 3);
+    auto i3 = std::pair<int64_t, int64_t>(4, 2);
 
-    auto i4 = pair<int64_t, int64_t>(5, 3);
-    auto i5 = pair<int64_t, int64_t>(6, 3);
-    auto i6 = pair<int64_t, int64_t>(7, 3);
+    auto i4 = std::pair<int64_t, int64_t>(5, 3);
+    auto i5 = std::pair<int64_t, int64_t>(6, 3);
+    auto i6 = std::pair<int64_t, int64_t>(7, 3);
 
-    auto i7 = pair<int64_t, int64_t>(20000000000, 1);
-    auto i8 = pair<int64_t, int64_t>(20000000000, 0);
-    auto i9 = pair<int64_t, int64_t>(20000000000, -1);
+    auto i7 = std::pair<int64_t, int64_t>(20000000000, 1);
+    auto i8 = std::pair<int64_t, int64_t>(20000000000, 0);
+    auto i9 = std::pair<int64_t, int64_t>(20000000000, -1);
 
-    auto points =
-        vector<pair<int64_t, int64_t>>{i0, i1, i2, i3, i4, i5, i6, i7, i8, i9};
+    auto points = std::vector<std::pair<int64_t, int64_t>>{i0, i1, i2, i3, i4,
+                                                           i5, i6, i7, i8, i9};
 
     QuadTree tree = QuadTree(points);
 
@@ -273,14 +272,15 @@ TEST_CASE("QuadTree update", "[QuadTree]") {
           " a very far horizontal pulsar") {
     int64_t big = INT64_MAX - 1;
     int64_t small = INT64_MIN + 1;
-    auto i0 = pair<int64_t, int64_t>(big, -1);
-    auto i1 = pair<int64_t, int64_t>(big, 0);
-    auto i2 = pair<int64_t, int64_t>(big, 1);
-    auto i3 = pair<int64_t, int64_t>(small, -1);
-    auto i4 = pair<int64_t, int64_t>(small, 0);
-    auto i5 = pair<int64_t, int64_t>(small, 1);
+    auto i0 = std::pair<int64_t, int64_t>(big, -1);
+    auto i1 = std::pair<int64_t, int64_t>(big, 0);
+    auto i2 = std::pair<int64_t, int64_t>(big, 1);
+    auto i3 = std::pair<int64_t, int64_t>(small, -1);
+    auto i4 = std::pair<int64_t, int64_t>(small, 0);
+    auto i5 = std::pair<int64_t, int64_t>(small, 1);
 
-    auto points = vector<pair<int64_t, int64_t>>{i0, i1, i2, i3, i4, i5};
+    auto points =
+        std::vector<std::pair<int64_t, int64_t>>{i0, i1, i2, i3, i4, i5};
 
     QuadTree tree = QuadTree(points);
     unsigned int originalHeight = tree.root->height;

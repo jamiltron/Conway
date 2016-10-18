@@ -1,6 +1,5 @@
 #include "../QuadTreeNode.hpp"
 #include "catch.hpp"
-#include <iostream>
 
 TEST_CASE("QuadTreeNode population sizes", "[QuadTreeNode]") {
   SECTION("Empty nodes have a population of 0") {
