@@ -197,7 +197,7 @@ void Game::render() {
     }
   }
 
-  SDL_SetRenderTarget(renderer, NULL);
-  SDL_RenderCopy(renderer, texture, NULL, NULL);
+  SDL_SetRenderTarget(renderer, nullptr);
+  SDL_RenderCopy(renderer, texture, nullptr, nullptr);
   SDL_RenderPresent(renderer);
 }
