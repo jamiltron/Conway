@@ -57,4 +57,6 @@ Effective Modern C++, Scott Meyers
 
 [Best Way To Trim StdString](http://stackoverflow.com/questions/216823/whats-the-best-way-to-trim-stdstring)
 
+[Herb Sutter on const](https://herbsutter.com/2013/05/28/gotw-6b-solution-const-correctness-part-2/)
+
 [Herb Sutter's Smart Cache](http://stackoverflow.com/questions/24379786/how-to-implement-cache-manager-using-stdshared-ptr)
